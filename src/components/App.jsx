@@ -33,7 +33,11 @@ export function App() {
     }
     setContacts([{ name, number, id: nanoid(5) }, ...contacts]);
   };
-
+  const getVisibleContacts = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
   const deleteName = id => {
     setContacts(contacts.filter(contact => contact.id !== id));
   };
@@ -46,7 +50,7 @@ export function App() {
         <ContactForm submitForm={getSubmitForm} />
         <SecondaryTitle>Contacts</SecondaryTitle>
         <Filter handleChange={handleChange} filter={filter} />
-        <ContactList contacts={contacts} onDelete={deleteName} />
+        <ContactList contacts={getVisibleContacts()} onDelete={deleteName} />
       </PhonebookWrap>
     </>
   );
